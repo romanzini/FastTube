@@ -1,8 +1,8 @@
-# Imersão Fullcycle 19 - Plataforma de streaming de vídeos
+# FastTube - Plataforma de streaming de vídeos
 
-![Imersão Full Stack && Full Cycle](https://events-fullcycle.s3.amazonaws.com/events-fullcycle/static/site/img/grupo_4417.png)
+![A YouTube clone built with Next.js]
 
-Participe gratuitamente: https://imersao.fullcycle.com.br/
+
 
 ## Requerimentos
 
