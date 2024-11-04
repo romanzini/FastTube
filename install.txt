@@ -1,0 +1,155 @@
+docker container rm -f $(docker container ls -qa)
+docker image rm -f $(docker image ls -qa)
+docker volume rm -f $(docker volume ls -q)
+docker stop $(docker ps -a -q)
+
+docker compose stop
+
+
+1 - Install asdf
+sudo  apt-get install build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev libncurses-dev tk-dev
+
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.1
+
+# For Ubuntu or other linux distros
+shell
+echo '. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+echo '. $HOME/.asdf/completions/asdf.bash' >> ~/.bashrc
+
+shell
+asdf plugin-add python
+
+Then install Python:
+
+shell
+asdf install python 3.12.6
+asdf global python 3.12.6
+
+2 - Set python local com asdf
+asdf local python 3.12.6
+
+2.1 - Instalando o gerenciar de virtualização do python
+pipenv shell
+
+3 - Install django
+pipenv install django
+
+4 - Create project with django
+django-admin startproject videos
+
+5 - Run server django
+python manage.py runserver
+
+6 - Migrante database django
+python manage.py migrate
+
+7 - Create super user with django
+python manage.py createsuperuser
+
+8 - Create app django
+django-admin startapp core
+
+-----------------------------------
+
+cd django/
+docker compose up -d
+docker compose exec django bash
+pipenv shell
+python manage.py dumpdata
+python manage.py loaddata initial_data
+chmod +x ./copy-media.sh
+./copy-media.sh
+ls /media/uploads
+pipenv install djangorestframework
+python manage.py runserver 0.0.0.0:8000
+
+
+python manage.py flush && python manage.py loaddata initial_data
+
+
+------------------------------------
+
+**** aula05-integração
+## Criando volume externo
+docker volume create external-storage
+
+# Ajustando o ambiente do django
+/home/romanzini/projetos/imersao
+cd django
+docker compose up -d
+docker compose exec django bash
+pipenv shell
+pipenv install django
+pipenv install djangorestframework
+pipenv install dj-database-url
+python manage.py migrate
+python manage.py dumpdata
+python manage.py loaddata initial_data
+chmod +x ./copy-media.sh
+./copy-media.sh
+ls /media/uploads
+
+##testando 
+
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8000
+python manage.py consumer_register_processed_video_path
+##
+http://localhost:8000/admin
+ou
+http://host.docker.internal:8000/admin/login/?next=/admin/
+
+---------------
+
+# Ajustando o ambiente do next.js
+/home/romanzini/projetos/imersao
+cd nextjs
+docker compose up -d
+docker compose exec nextjs bash
+npm install
+npm run dev
+http://localhost:3000
+ou
+http://host.docker.internal:3000/
+
+---------------
+
+# Ajustando o ambiente do golang
+/home/romanzini/projetos/imersao
+cd golang
+docker compose up -d
+docker compose exec go_app_dev bash
+go run cmd/videoconverter/main.go
+
+-----------------
+
+## Pra executar a aplicação final
+docker compor up -d
+golang
+django web
+nextjs
+django consumer chunk
+django consumer finalized
+
+Executar cada um dos microservicos em um docker compose exec do django
+
+# Executando chunks de uploads
+docker compose exec django bash
+pipenv shell
+python manage.py consumer_upload_chunks_to_external_storage
+
+# Executando chunks de register
+docker compose exec django bash
+pipenv shell
+python manage.py consumer_register_processed_video_path
+
+# Executando o nextjs bash
+docker compose exec nextjs bash
+
+# Links
+http://localhost:8000/api/videos
+http://host.docker.internal:3000/
+
+
+
+
