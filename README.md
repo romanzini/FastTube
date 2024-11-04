@@ -36,4 +36,3 @@ Acesse as pastas `golang`, `django` e `nextjs` e siga as instruções.
 
 ## Arquitetura do projeto
 
-![alt text](./arquitetura_projeto.png)
